@@ -1,0 +1,7 @@
+/* Unused - All styles are loaded via Tailwind CSS v4 in index.css */
+
+.subtask-complete {
+  color: #9ca3af;
+  text-decoration: line-through;
+  opacity: 0.9;
+}
