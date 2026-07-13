@@ -193,15 +193,3 @@ NODE_ENV=production
 - The backend accepts requests from the configured frontend origin via CORS.
 - The app is designed to work with both local development and deployed environments.
 
-## Contributing
-
-Contributions are welcome. Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
-
-## Contact
-
-For questions or feedback, please open an issue or reach out through the repository maintainer contact channel.
