@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { X, Plus, AlertCircle, Sparkles } from 'lucide-react';
+import { buildApiUrl } from '../config/api';
 
 export default function TaskModal({ isOpen, onClose, onSave, columnName }) {
   const [title, setTitle] = useState('');
@@ -27,7 +28,7 @@ export default function TaskModal({ isOpen, onClose, onSave, columnName }) {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:5000/api/ai/suggest', {
+      const response = await fetch(buildApiUrl('/api/ai/suggest'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

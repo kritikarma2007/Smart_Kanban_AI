@@ -15,19 +15,26 @@ connectDB();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Allowed Frontend URLs
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://your-project-name.vercel.app' // Replace with your Vercel URL
-];
+  'http://localhost:3000',
+  'https://smart-kanban-ai.vercel.app',
+  'https://smart-kanban-ai-git-main-*.vercel.app',
+  process.env.FRONTEND_URL
+].filter(Boolean);
 
-// CORS Configuration
-app.use(cors({
+const corsOptions = {
   origin: function (origin, callback) {
-    // Allow requests with no origin (Postman, mobile apps, etc.)
     if (!origin) return callback(null, true);
 
-    if (allowedOrigins.includes(origin)) {
+    if (allowedOrigins.some((allowedOrigin) => {
+      if (!allowedOrigin) return false;
+      if (allowedOrigin.includes('*')) {
+        const regex = new RegExp(`^${allowedOrigin.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\\\*/g, '.*')}$`);
+        return regex.test(origin);
+      }
+      return allowedOrigin === origin;
+    })) {
       return callback(null, true);
     }
 
@@ -36,7 +43,9 @@ app.use(cors({
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
-}));
+};
+
+app.use(cors(corsOptions));
 
 // Body Parsing Middleware
 app.use(express.json());

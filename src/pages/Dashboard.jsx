@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { LayoutDashboard, CheckSquare, Clock, Sparkles } from 'lucide-react';
 import KanbanBoard from '../components/KanbanBoard';
 import TaskModal from '../components/TaskModal';
+import { buildApiUrl } from '../config/api';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ export default function Dashboard() {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/tasks', {
+      const response = await fetch(buildApiUrl('/api/tasks'), {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const payload = await response.json();
@@ -112,7 +113,7 @@ export default function Dashboard() {
       }
 
       // 🔐 API request with robust error handling and authorization header
-      const response = await fetch('http://localhost:5000/api/tasks', {
+      const response = await fetch(buildApiUrl('/api/tasks'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -183,7 +184,7 @@ export default function Dashboard() {
       }
 
       try {
-        const response = await fetch(`http://localhost:5000/api/tasks/${movedTask.id}`, {
+        const response = await fetch(buildApiUrl(`/api/tasks/${movedTask.id}`), {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -211,7 +212,7 @@ export default function Dashboard() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/tasks/${taskId}`, {
+      const response = await fetch(buildApiUrl(`/api/tasks/${taskId}`), {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
